@@ -5,11 +5,11 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const packageRoot = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const groups = ["pstack", "commits", "github-pr-management"];
+const groups = ["pstack", "coding-conventions", "commits", "github-pr-management"];
 const help = `Usage: fahu-skills install [--target DIRECTORY] [--only GROUP]
 
 Install project-local Codex skills without overwriting existing files.
-GROUP is pstack, commits, or github-pr-management; the default is all groups.
+GROUP is pstack, coding-conventions, commits, or github-pr-management; the default is all groups.
 DIRECTORY defaults to the current directory and must already exist.
 Repeated installation of identical contents is a no-op.
 `;

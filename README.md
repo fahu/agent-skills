@@ -1,6 +1,6 @@
 # Codex skills
 
-Install all 61 skills from this repository with the standard [skills CLI](https://github.com/vercel-labs/skills):
+Install all 62 skills from this repository with the standard [skills CLI](https://github.com/vercel-labs/skills):
 
 ```sh
 npx skills@1.7.4 add fahu/skills --skill '*' --agent codex
@@ -8,15 +8,17 @@ npx skills@1.7.4 add fahu/skills --skill '*' --agent codex
 
 | Skill group | Included skills |
 | --- | --- |
+| `coding-conventions` | Multiline `if` statements with explicit block bodies |
 | `commits` | Atomic commits and conventional commit messages |
 | `github-pr-management` | Review feedback, fixes, and reviewer replies |
 | `pstack` | 59 prefixed entrypoints, including `$pstack` and `$pstack-how`, with the complete pinned upstream bundle |
 
 ## Select skills
 
-Install either standalone skill by name:
+Install a standalone skill by name:
 
 ```sh
+npx skills@1.7.4 add fahu/skills --skill coding-conventions --agent codex
 npx skills@1.7.4 add fahu/skills --skill commits --agent codex
 npx skills@1.7.4 add fahu/skills --skill github-pr-management --agent codex
 ```
@@ -57,6 +59,7 @@ A complete Codex installation has this structure:
 
 ```text
 .agents/skills/
+  coding-conventions/
   commits/
   github-pr-management/
   pstack/
