@@ -63,42 +63,36 @@ async function checkParents(target, relative) {
 
 async function makePlan(selected) {
   const plan = new Map();
+  const skillsRoot = path.join(packageRoot, "skills");
   if (selected.includes("pstack")) {
-    const files = await readTree(path.join(packageRoot, "pstack"));
+    const files = await readTree(path.join(skillsRoot, "pstack"));
     const npmFiles = JSON.parse(await fs.readFile(path.join(packageRoot, "bin/npm-files.json")));
     for (const [name, content] of Object.entries(npmFiles)) {
       if (!files.has(name)) files.set(name, { data: Buffer.from(content), mode: 0o644 });
     }
-    const lock = JSON.parse(files.get("upstream.lock.json").data);
-    const snapshotFiles = [...files.keys()].filter(name => name.startsWith("upstream/"));
+    const lock = JSON.parse(files.get(".bundle/upstream.lock.json").data);
+    const snapshotFiles = [...files.keys()].filter(name => name.startsWith(".bundle/upstream/"));
     if (snapshotFiles.length !== Object.keys(lock.files).length) {
       throw new Error("Incomplete pstack snapshot in npm package");
     }
     for (const [name, expected] of Object.entries(lock.files)) {
-      const file = files.get(`upstream/${name}`);
+      const file = files.get(`.bundle/upstream/${name}`);
       if (!file || createHash("sha256").update(file.data).digest("hex") !== expected.sha256
         || Boolean(file.mode & 0o111) !== expected.executable) {
         throw new Error(`pstack snapshot integrity failed: ${name}`);
       }
     }
-    plan.set(".agents/pstack", files);
+    plan.set(".agents/skills/pstack", files);
     const names = [...Object.values(lock.commands).map(command => command.name), ...Object.keys(lock.aliases)];
     for (const name of names) {
-      const prefix = `skills/${name}/`;
-      const wrapper = new Map();
-      for (const [filename, file] of files) {
-        if (!filename.startsWith(prefix)) continue;
-        const relative = filename.slice(prefix.length);
-        wrapper.set(relative, relative === "SKILL.md"
-          ? { ...file, data: Buffer.from(file.data.toString().replaceAll("](../../", "](../../pstack/")) }
-          : file);
-      }
+      if (name === "pstack") continue;
+      const wrapper = await readTree(path.join(skillsRoot, name));
       if (!wrapper.has("SKILL.md")) throw new Error(`Missing pstack entrypoint: ${name}`);
       plan.set(`.agents/skills/${name}`, wrapper);
     }
   }
   for (const name of selected.filter(name => name !== "pstack")) {
-    plan.set(`.agents/skills/${name}`, await readTree(path.join(packageRoot, name)));
+    plan.set(`.agents/skills/${name}`, await readTree(path.join(skillsRoot, name)));
   }
   return plan;
 }

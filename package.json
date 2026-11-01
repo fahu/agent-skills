@@ -7,11 +7,13 @@
   "bin": {
     "fahu-skills": "bin/fahu-skills.mjs"
   },
+  "scripts": {
+    "skills:build": "python3 skills/pstack/.bundle/scripts/export.py",
+    "check": "python3 skills/pstack/.bundle/scripts/verify.py --require-all"
+  },
   "files": [
     "bin/",
-    "pstack/",
-    "commits/",
-    "github-pr-management/"
+    "skills/"
   ],
   "engines": {
     "node": ">=22"
