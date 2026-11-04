@@ -9,7 +9,8 @@
   },
   "scripts": {
     "skills:build": "python3 skills/pstack/.bundle/scripts/export.py",
-    "check": "python3 skills/pstack/.bundle/scripts/verify.py --require-all && node --test --test-reporter=dot skills/security-audit/validate-*.test.cjs"
+    "check": "python3 skills/pstack/.bundle/scripts/verify.py --require-all && python3 scripts/mattpocock.py && node --test --test-reporter=dot skills/security-audit/validate-*.test.cjs",
+    "check:mattpocock": "python3 scripts/mattpocock.py"
   },
   "files": [
     "bin/",
