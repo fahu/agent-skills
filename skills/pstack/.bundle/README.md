@@ -22,10 +22,9 @@ if the selector has not refreshed. See the
 Nothing is installed into your global skills directory.
 
 Install this collection with the standard `skills` CLI, as documented in the
-[repository README](https://github.com/fahu/skills#codex-skills). The `pstack` skill contains this complete
-bundle. Select it alongside any public `pstack-*` entrypoints; the CLI does not
-resolve that dependency automatically. The installed bundle lives inside
-`.agents/skills/pstack/.bundle/` and works without an npm dependency on this repository.
+[repository README](https://github.com/fahu/agent-skills#install-skills). The `pstack` skill contains this complete
+bundle. For a selective Git installation, include it alongside any public
+`pstack-*` entrypoints. The bundle is available at `.agents/skills/pstack/.bundle/`.
 Cross-workflow calls use the internal `skills/` entrypoints, so all workflow
 references remain available when you install only selected public names.
 The hidden `.bundle/` directory prevents Codex from discovering the preserved
@@ -110,8 +109,10 @@ python3 skills/pstack/.bundle/scripts/verify.py --require-all
 ```
 
 In a consumer project, run `python3 .agents/skills/pstack/.bundle/scripts/verify.py`.
-Add `--require-all` to require all 59 public pstack entrypoints. A subset still
-contains all internal entrypoints and the complete upstream snapshot.
+Add `--require-all` to require all 59 public pstack entrypoints. Each install
+of `pstack` contains all internal entrypoints. npm omits the upstream
+`.gitignore` from its package, so the verifier checks the other snapshot files
+when it runs from the installed npm dependency.
 
 After editing canonical entrypoints in `skills/`, run the repository's
 `npm run skills:build` to regenerate the committed public exports. Consumers

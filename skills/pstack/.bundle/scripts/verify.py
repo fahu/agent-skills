@@ -20,6 +20,15 @@ def verify(root, require_all=False):
         path.relative_to(snapshot).as_posix()
         for path in snapshot.rglob("*") if path.is_file()
     }
+    package = root.parents[2]
+    # npm omits the upstream Git ignore file from the installed package.
+    if (
+        ".gitignore" not in actual_files
+        and package.name == "skills"
+        and package.parent.name == "@fahu"
+        and package.parent.parent.name == "node_modules"
+    ):
+        expected_files.discard(".gitignore")
     if actual_files != expected_files:
         errors.append(f"Snapshot file set changed: {actual_files ^ expected_files}")
     for name, recorded in lock["files"].items():
