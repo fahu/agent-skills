@@ -14,47 +14,5 @@
   },
   "files": [
     "skills/"
-  ],
-  "skills": [
-    {
-      "source": "cloudflare/security-audit-skill",
-      "ref": "c1c8a8c1471069fb0e188eeaff69b8e8db6564a8",
-      "skills": [
-        "security-audit"
-      ]
-    },
-    {
-      "source": "mattpocock/skills",
-      "ref": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
-      "skills": [
-        "ask-matt",
-        "code-review",
-        "codebase-design",
-        "diagnosing-bugs",
-        "domain-modeling",
-        "grill-me",
-        "grill-with-docs",
-        "grilling",
-        "handoff",
-        "implement",
-        "implement-spec",
-        "improve-codebase-architecture",
-        "pr",
-        "prototype",
-        "research",
-        "retro",
-        "setup-matt-pocock-skills",
-        "tdd",
-        "teach",
-        "to-questionnaire",
-        "to-spec",
-        "to-tickets",
-        "triage",
-        "wait-what",
-        "wayfinder",
-        "wizard",
-        "writing-for-agents"
-      ]
-    }
   ]
 }
